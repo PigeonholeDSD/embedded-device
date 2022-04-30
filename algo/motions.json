@@ -1,0 +1,14 @@
+[
+    {
+        "name": "walk",
+        "duration": 20,
+        "display": "walk",
+        "desc": "Please walk on a firm and level ground"
+    },
+    {
+        "name": "upstairs",
+        "duration": 10,
+        "display": "go upstairs",
+        "desc": "Please go upstairs"
+    }
+]
