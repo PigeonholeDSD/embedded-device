@@ -117,7 +117,6 @@ def post_calibration(motion: str):
     return '', 200
 
 
-# TODO
 @app.get('/calibration')
 def get_calibration():
     if not os.listdir('calibration'):
