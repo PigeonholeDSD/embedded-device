@@ -53,14 +53,6 @@ def sign(data: str) -> str:
     return device_key().sign(data.encode(), encoder=HexEncoder).signature.decode()
 
 
-def verify(data: str, sig: str) -> bool:
-    try:
-        ca_key().verify(data.encode(), HexEncoder().decode(sig))
-        return True
-    except:
-        return False
-
-
 def hash_file(file: str) -> str:
     h = hashlib.sha256()
     with open(file, 'rb') as f:
@@ -82,6 +74,6 @@ def sign_ticket(ts: str) -> str:
 
 def check_file(file: str, sig: str) -> None:
     try:
-        ca_key().verify(hash_file(file).encode(), HexEncoder().decode(sig))
+        ca_key().verify(hash_file(file).encode(), HexEncoder().decode(sig.encode()))
     except:
         raise error.SignatureError('Invalid signature for model file')

@@ -4,7 +4,7 @@ import threading
 import subprocess
 import cali
 
-_task = ''
+_task: threading.Thread|None = None
 _stop = threading.Event()
 result = ''
 
@@ -27,6 +27,7 @@ def predict() -> None:
         stdout=subprocess.PIPE,
         bufsize=0,
     )
+    assert proc_algo.stdout # make mypy happy
     for line in proc_algo.stdout:
         result = line.decode().strip()
         print(result)

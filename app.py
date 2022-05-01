@@ -4,6 +4,7 @@
 import re
 import os
 import os.path
+import json
 import uuid
 import atexit
 import shutil
@@ -112,12 +113,10 @@ def post_calibration(motion: str):
         }), 409
     return '', 200
 
+
 # TODO
-
-
 @app.get('/calibration')
 def get_calibration():
-    path = db.device.get(uuid).calibration
     if not os.listdir('calibration'):
         return '', 404
     with tarfile.open('calibration.tar.gz', "w:gz") as tar:
