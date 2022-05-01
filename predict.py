@@ -46,14 +46,16 @@ def predict() -> None:
         proc_data.kill()
 
 
-def start() -> None:
+def start() -> bool:
     global _task
+    if not os.path.exists('model'):
+        return False
     if cali.running:
-        return
+        return False
     stop()
     _task = threading.Thread(target=predict)
     _task.start()
-
+    return True
 
 def stop() -> None:
     global _task, _stop

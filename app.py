@@ -40,6 +40,10 @@ app.register_error_handler(error.APISyntaxError, error.APISyntaxError.handler)
 app.register_error_handler(error.SignatureError, error.SignatureError.handler)
 
 
+def beep(times: int=1):
+    for _ in range(times):
+        print('*BEEP*')
+
 @app.get('/')
 def status():
     return jsonify({
@@ -77,8 +81,7 @@ def put_model():
         crypto.check_file(filename, request.headers.get('Signature'))
         os.replace(filename, 'model')
         predict.start()
-        print('*BEEP*')
-        print('*BEEP*')
+        beep(2)
     finally:
         shutil.rmtree(path)
     return '', 200
@@ -97,7 +100,7 @@ def get_pending():
 
 @app.post('/calibration/<string:motion>')
 def post_calibration(motion: str):
-    print('*BEEP*')
+    beep(1)
     with open('algo/motions.json') as f:
         motions = json.load(f)
     duration = 10
@@ -133,7 +136,8 @@ def get_calibration():
     return send_file('calibration.tar.gz', 'application/x-tar+gzip')
 
 
-predict.start()
+if not predict.start(): # no model found
+    beep(3)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8001)
