@@ -30,7 +30,6 @@ def predict() -> None:
     assert proc_algo.stdout # make mypy happy
     for line in proc_algo.stdout:
         result = line.decode().strip()
-        print(result)
         if _stop.is_set():
             _stop.clear()
             break
