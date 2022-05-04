@@ -139,7 +139,7 @@ def get_calibration():
 @app.delete('/calibration')
 def delete_calibration():
     for file in os.listdir('calibration'):
-        os.unlink(file)
+        os.unlink(os.path.join('calibration', file))
         return '', 404
     return '', 200
 
