@@ -24,7 +24,7 @@ Because we use submodule to manage database and algorithm module, if there're ne
 
 ```
 git submodule update --remote --merge
-git commit -am 'chroe: sync <mod>'
+git commit -am 'chore: sync <mod>'
 ```
 
 Run in the development mode:
