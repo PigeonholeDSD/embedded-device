@@ -140,7 +140,6 @@ def get_calibration():
 def delete_calibration():
     for file in os.listdir('calibration'):
         os.unlink(os.path.join('calibration', file))
-        return '', 404
     return '', 200
 
 
