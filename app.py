@@ -40,9 +40,10 @@ app.register_error_handler(error.APISyntaxError, error.APISyntaxError.handler)
 app.register_error_handler(error.SignatureError, error.SignatureError.handler)
 
 
-def beep(times: int=1):
+def beep(times: int = 1):
     for _ in range(times):
         print('*BEEP*')
+
 
 @app.get('/')
 def status():
@@ -135,7 +136,15 @@ def get_calibration():
     return send_file('calibration.tar.gz', 'application/x-tar+gzip')
 
 
-if not predict.start(): # no model found
+@app.delete('/calibration')
+def delete_calibration():
+    for file in os.listdir('calibration'):
+        os.unlink(file)
+        return '', 404
+    return '', 200
+
+
+if not predict.start():  # no model found
     beep(3)
 
 if __name__ == '__main__':
