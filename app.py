@@ -120,14 +120,15 @@ def post_calibration(motion: str):
 
 @app.get('/calibration')
 def get_calibration():
-    if not os.listdir('calibration'):
+    if not [ x for x in os.listdir('calibration') if not x.startswith('.') ]:
         return '', 404
     with tarfile.open('calibration.tar.gz', "w:gz") as tar:
         for motion in os.listdir('calibration'):
-            tar.add(
-                name='calibration/'+motion,
-                arcname=motion,
-            )
+            if not motion.startswith('.'):
+                tar.add(
+                    name='calibration/'+motion,
+                    arcname=motion,
+                )
 
     @after_this_request
     def delete_file(response):
@@ -139,7 +140,8 @@ def get_calibration():
 @app.delete('/calibration')
 def delete_calibration():
     for file in os.listdir('calibration'):
-        os.unlink(os.path.join('calibration', file))
+        if not file.startswith('.'):
+            os.unlink(os.path.join('calibration', file))
     return '', 200
 
 
