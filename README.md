@@ -17,6 +17,14 @@ git clone https://github.com/PigeonholeDSD/embedded-device.git
 cd embedded-device/
 pip install -r requirements.txt
 git submodule update --init
+pip install -r algo/requirements.txt
+```
+
+Because we use submodule to manage database and algorithm module, if there're new commits, sync and commit with:
+
+```
+git submodule update --remote --merge
+git commit -am 'chroe: sync <mod>'
 ```
 
 Run in the development mode:
