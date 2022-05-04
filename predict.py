@@ -4,7 +4,7 @@ import threading
 import subprocess
 import cali
 
-_task: threading.Thread|None = None
+_task = None
 _stop = threading.Event()
 result = ''
 
