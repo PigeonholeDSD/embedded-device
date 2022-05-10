@@ -11,7 +11,7 @@ import shutil
 import tarfile
 from signal import SIGTERM
 from tempfile import mkdtemp
-from flask import Flask, request, jsonify, send_file, current_app, after_this_request
+from flask import Flask, request, jsonify, send_file, current_app, after_this_request, make_response
 import cali
 import error
 import crypto
@@ -134,7 +134,9 @@ def get_calibration():
     def delete_file(response):
         os.unlink('calibration.tar.gz')
         return response
-    return send_file('calibration.tar.gz', 'application/x-tar+gzip')
+    response = make_response(send_file('calibration.tar.gz', 'application/x-tar+gzip'), 200)
+    response.headers['Signature'] = crypto.sign_file('calibration.tar.gz')
+    return response
 
 
 @app.delete('/calibration')
