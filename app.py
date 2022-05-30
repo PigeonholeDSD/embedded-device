@@ -158,6 +158,13 @@ def delete_calibration():
             os.unlink(os.path.join('calibration', file))
     return '', 200
 
+@app.delete('/model')
+def delete_model():
+    if os.path.exists('model.json'):
+        os.remove('model.json')
+        os.remove('model')
+    return '', 200
+
 
 if not predict.start():  # no model found
     beep(3)
