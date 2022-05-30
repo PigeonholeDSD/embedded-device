@@ -47,10 +47,16 @@ def beep(times: int = 1):
 
 @app.get('/')
 def status():
+    if os.path.exists('model.json'):
+        with open('model.json') as f:
+            algo = json.load(f)
+    else:
+        algo = None
     return jsonify({
         'id': str(current_app.config['ID']),
         'battery': 100,
         'charging': True,
+        'algorithm': algo,
         'prediction': predict.result,
     }), 200
 
