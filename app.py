@@ -70,8 +70,12 @@ def get_model():
     return send_file('model', 'application/octet-stream')
 
 
-@app.put('/model')
-def put_model():
+@app.put('/model/<string:algo>')
+def put_model(algo: str):
+    with open('algo/algo.json', 'r') as f:
+        algo_list = json.load(f)
+    if algo not in algo_list.keys():
+        raise error.AlgorithmNotFoundError()
     file = request.files.get('model')
     if not file:
         raise error.APISyntaxError('No file uploaded')
@@ -81,6 +85,8 @@ def put_model():
         file.save(filename)
         crypto.check_file(filename, request.headers.get('Signature'))
         os.replace(filename, 'model')
+        with open('model.json', 'w') as f:
+            json.dump(algo_list[algo], f)
         predict.start()
         beep(2)
     finally:
