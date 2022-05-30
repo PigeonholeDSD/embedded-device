@@ -1,3 +1,4 @@
+import json
 import time
 import os.path
 import threading
@@ -9,7 +10,7 @@ _stop = threading.Event()
 result = ''
 
 
-def predict() -> None:
+def predict(predict_entrypoint: list) -> None:
     global result
     print('Starting collecting')
     proc_data = subprocess.Popen(
@@ -21,7 +22,7 @@ def predict() -> None:
     )
     print('Starting predicting')
     proc_algo = subprocess.Popen(
-        ['/usr/bin/env', 'python3', 'predict.py', os.path.abspath('model')],
+        [*predict_entrypoint, os.path.abspath('model')],
         cwd='algo',
         stdin=proc_data.stdout,
         stdout=subprocess.PIPE,
@@ -52,7 +53,9 @@ def start() -> bool:
     if cali.running:
         return False
     stop()
-    _task = threading.Thread(target=predict)
+    with open('model.json', 'r') as f:
+        predict_entrypoint = json.load(f)['entrypoint']['predict']
+    _task = threading.Thread(target=predict, args=[predict_entrypoint])
     _task.start()
     return True
 
