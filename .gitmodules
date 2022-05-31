@@ -1,6 +1,6 @@
 [submodule "db"]
 	path = db
-	url = https://liyu.utad.pt/happy-family/collect.git
+	url = https://github.com/dsd-db/collect.git
 [submodule "algo"]
 	path = algo
-	url = https://liyu.utad.pt/guosiqi/furia.git
+	url = https://github.com/PenGuln/furia.git
