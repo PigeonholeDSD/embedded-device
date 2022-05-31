@@ -55,6 +55,7 @@ def start() -> bool:
     stop()
     with open('model.json', 'r') as f:
         predict_entrypoint = json.load(f)['entrypoint']['predict']
+    predict_entrypoint[2] = os.path.abspath(predict_entrypoint[2].replace('$ALGO', 'algo'))
     _task = threading.Thread(target=predict, args=[predict_entrypoint])
     _task.start()
     return True
