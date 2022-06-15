@@ -57,7 +57,10 @@ def start() -> bool:
         predict_entrypoint = json.load(f)['entrypoint']['predict']
     predict_entrypoint = list(map(
         lambda x: x.replace(
-            '$ALGO', os.path.join(os.path.abspath(__file__), 'algo')
+            '$ALGO', os.path.join(
+                os.path.split(os.path.abspath(__file__))[0], 
+                'algo'
+            )
         ), 
         predict_entrypoint
     ))
