@@ -26,6 +26,15 @@ git submodule update --remote --merge
 git commit -am 'chore: sync <mod>'
 ```
 
+Before firing up,
+
+1. change `mode` in `db/collect.json` to
+    - `_BLEAK`, if the device emulator can access the sensors via Bluetooth directly
+    - `_SOCKET`, otherwise, to use TCP socket for sensor data input
+        - change `ip` and `port` accordingly 
+        - run `w2l/collect.py` on Windows
+2. use `crypto.py:sign_device` to generate device certificate, uncompress here
+
 Run in the development mode:
 
 ```
