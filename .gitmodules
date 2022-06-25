@@ -4,3 +4,6 @@
 [submodule "algo"]
 	path = algo
 	url = https://github.com/PenGuln/furia.git
+[submodule "w2l"]
+	path = w2l
+	url = https://github.com/dsd-db/collect-w2l-windows.git
